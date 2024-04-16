@@ -5,6 +5,7 @@ import { PrismaService } from "./prisma/prisma.service";
 import { CreateAccountController } from "./controllers/create-account.controller";
 import { envSchema } from "./env";
 import { AuthModule } from "./auth/auth.module";
+import { AuthenticateController } from "./controllers/authenticate-controller";
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { AuthModule } from "./auth/auth.module";
     }),
     AuthModule,
   ], // Configuração do dotenv
-  controllers: [CreateAccountController], // Tudo que tem requisição http
+  controllers: [CreateAccountController, AuthenticateController], // Tudo que tem requisição http
   providers: [PrismaService], // Tudo que não tem requisição http
 })
 export class AppModule {}
