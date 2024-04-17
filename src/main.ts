@@ -9,7 +9,6 @@ async function bootstrap() {
   });
   const configService: ConfigService<Env, true> = app.get(ConfigService); // Pega o serviço de configuração
   const port = configService.get("PORT", { infer: true }); // Pega a porta do arquivo .env
-
   await app.listen(port);
 }
 bootstrap();

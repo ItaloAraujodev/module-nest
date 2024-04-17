@@ -6,6 +6,7 @@ import { CreateAccountController } from "./controllers/create-account.controller
 import { envSchema } from "./env";
 import { AuthModule } from "./auth/auth.module";
 import { AuthenticateController } from "./controllers/authenticate-controller";
+import { CreateQuestionController } from "./controllers/create-question.controller";
 
 @Module({
   imports: [
@@ -15,7 +16,11 @@ import { AuthenticateController } from "./controllers/authenticate-controller";
     }),
     AuthModule,
   ], // Configuração do dotenv
-  controllers: [CreateAccountController, AuthenticateController], // Tudo que tem requisição http
+  controllers: [
+    CreateAccountController,
+    AuthenticateController,
+    CreateQuestionController,
+  ], // Tudo que tem requisição http
   providers: [PrismaService], // Tudo que não tem requisição http
 })
 export class AppModule {}
