@@ -22,9 +22,8 @@ const schemaId = randomUUID();
 beforeAll(async () => {
   const databaseUrl = generateUniqueDatabaseUrl(schemaId);
   process.env.DATABASE_URL = databaseUrl; // Sobre escreve a variável de ambiente DATABASE_URL com a url gerada
-  console.log(databaseUrl);
 
-  execSync("npx prisma migrate deploy"); // migrate deploy roda só as migrações que ainda não foram rodadas, já o migrate dev vai ler o schema e vai gerar novas migration
+  execSync("npx prisma db push"); // migrate deploy roda só as migrações que ainda não foram rodadas, já o migrate dev vai ler o schema e vai gerar novas migration
 });
 
 // Depois de todos os testes

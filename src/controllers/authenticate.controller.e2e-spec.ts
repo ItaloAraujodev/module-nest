@@ -2,9 +2,10 @@ import { AppModule } from "@/app.module";
 import { PrismaService } from "@/prisma/prisma.service";
 import { INestApplication } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
+import { hash } from "bcryptjs";
 import request from "supertest";
 
-describe("Create account (E2E)", () => {
+describe("Authenticate account (E2E)", () => {
   let app: INestApplication;
   let prisma: PrismaService;
 
@@ -19,20 +20,23 @@ describe("Create account (E2E)", () => {
     await app.init();
   });
 
-  test("[POST]/accounts", async () => {
-    const response = await request(app.getHttpServer()).post("/accounts").send({
-      name: "JohnnnDoe",
+  test("[POST]/sessions", async () => {
+    await prisma.user.create({
+      data: {
+        name: "JohnnnDoe",
+        email: "Jhonnn@gmail.com",
+        password: await hash("123456", 8),
+      },
+    });
+
+    const response = await request(app.getHttpServer()).post("/sessions").send({
       email: "Jhonnn@gmail.com",
       password: "123456",
     });
 
     expect(response.statusCode).toBe(201);
-
-    const userOnDatabase = await prisma.user.findUnique({
-      where: {
-        email: "Jhonnn@gmail.com",
-      },
+    expect(response.body).toEqual({
+      acessToken: expect.any(String),
     });
-    expect(userOnDatabase).toBeTruthy();
   });
 });
