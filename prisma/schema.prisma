@@ -29,10 +29,10 @@ model User {
 model Question {
   id        String    @id @default(cuid())
   title     String
-  slut      String    @unique
+  slug      String
   content   String
-  createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
+  createdAt DateTime  @default(now())
   authorId  String
 
   author User @relation(fields: [authorId], references: [id])
